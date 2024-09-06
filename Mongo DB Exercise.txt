@@ -1,0 +1,57 @@
+
+1. Create Operation
+
+// Switch to or create the "library" database
+use library
+
+// Create a collection named "books" with fields: title, author, and published_year
+db.createCollection("books")
+
+// Insert a document into the "books" collection with the details of your favorite book
+db.books.insertOne({
+title: "Harry Potter and the Philosopher's Stone",
+author: "J.K. Rowling",
+published_year: 1997
+})
+
+2. Read Operation
+
+// Retrieve all documents from the "books" collection
+db.books.find()
+
+// Find and display only the documents where the author is "J.K. Rowling"
+db.books.find({ author: "J.K. Rowling" })
+
+// Fetch and display the document with the earliest published year
+db.books.find().sort({ published_year: 1 }).limit(1)
+
+3. Update Operation
+
+// Update the published year of the book with the title "The Catcher in the Rye" to the current year
+db.books.updateOne(
+{ title: "The Catcher in the Rye" },
+{ $set: { published_year: new Date().getFullYear() } }
+)
+
+// Add a new field "genre" with the value "Mystery" to all documents in the "books" collection
+db.books.updateMany(
+{},
+{ $set: { genre: "Mystery" } }
+)
+
+4. Delete Operation
+
+// Remove the document with the title "1984" from the "books" collection
+db.books.deleteOne({ title: "1984" })
+
+// Delete all documents from the "books" collection where the published year is before 2000
+db.books.deleteMany({ published_year: { $lt: 2000 } })
+
+5. Advanced Query
+
+// Find and display the top 3 recently published books from the "books" collection
+db.books.find().sort({ published_year: -1 }).limit(3)
+
+// Retrieve documents from the "books" collection where the title contains the word "MongoDB" or "NoSQL"
+db.books.find({ title: { $regex: /MongoDB|NoSQL/ } })
+
